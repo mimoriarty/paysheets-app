@@ -1,1 +1,1 @@
-export const PAYSHEEET_ENDPOINT = 'https://hook.eu1.make.com/tpi2z2xpq6b66jwhdsbjioh0643jjh5g'
+export const PAYSHEEET_ENDPOINT = '' // TODO: your webhook here
