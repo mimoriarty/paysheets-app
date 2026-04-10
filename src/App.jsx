@@ -24,7 +24,8 @@ function App() {
         
         if (response.ok) {
           const data = await response.json()
-          const agentMessage = { id: Date.now() + 1, text: data.response, sender: 'agent' }
+          const composedMessage = data.status === 'stored' ? `Matched Data: ${JSON.stringify(data.matched)}` : `Reason: ${data.reason}`
+          const agentMessage = { id: Date.now() + 1, text: composedMessage, sender: 'agent' }
           setMessages(prev => [...prev, agentMessage])
         } else {
           console.error('Failed to get response from AI agent')
@@ -37,7 +38,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>AI Chat Agent</h1>
+      <h1>Paysheet AI Chat Agent</h1>
       <div className="chat-window">
         {messages.map(msg => (
           <div key={msg.id} className={`message ${msg.sender}`}>
@@ -46,12 +47,12 @@ function App() {
         ))}
       </div>
       <div className="input-area">
-        <input
-          type="text"
+        <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
           placeholder="Type your message..."
+          rows={3}
         />
         <button onClick={sendMessage}>Send</button>
       </div>
